@@ -28,10 +28,11 @@
             <button @click="nextActivity">Skip</button>
         </div>
 
-
+        <!-- approx time and tasks left -->
         <div class="approx-time-left">
-          <h2>Approx time left TODO</h2>
-          <!-- Placeholder for approx time left -->
+          <p>Pickles: {{ completedPicklesCount }}/{{ totalPicklesCount }}</p>
+          <p>Finish At: {{ estimatedTimeLeft }}</p>
+          
         </div>
       </div>
 
@@ -42,11 +43,27 @@
         <div class="task-list">
             <h1>Your tasks</h1>
             <ul>
-              <li v-for="(task,index) in tasks" :key="index">{{ task }}</li>
+              <li v-for="(task,index) in activeTasks" :key="index">
+                <div class="task-item">
+                  <div class="task-title">{{ task.title }}</div>
+                  <div class="task-description" v-if="task.description">{{ task.description }}</div>
+                  <div class="task-pickles">{{ task.pickles }} </div>
+                  <button @click="markTaskAsCompleted(index)">Mark as completed</button>
+                </div>
+              </li>
             </ul>
             <p v-if="tasks.length === 0">Seems like there are no tasks left...</p>
+            <h1>Completed tasks</h1>
+            <ul>
+              <li v-for="(task,index) in completedTasks" :key="index">
+                <div class="task-item">
+                  <div class="task-title">{{ task.title }}</div>
+                  <div class="task-description" v-if="task.description">{{ task.description }}</div>
+                  <div class="task-pickles">{{ task.pickles }}</div>
+                </div>
+              </li>
+            </ul>
 
-            <!-- Placeholder for task list -->
         </div>
 
 
@@ -87,6 +104,7 @@
          title: '',
          description: '',
          pickles: null,
+         completed: false,
         },
         showPopup: false,
       };
@@ -96,7 +114,26 @@
         const minutes = this.minutes < 10 ? `0${this.minutes}` : this.minutes;
         const seconds = this.seconds < 10 ? `0${this.seconds}` : this.seconds;
         return `${minutes}:${seconds}`;
-      }
+      },
+      totalPicklesCount() {
+        return this.tasks.reduce((total, task) => total + task.pickles, 0);
+      },
+      completedPicklesCount() {
+        return this.tasks.reduce((total, task) => task.completed ? total + task.pickles : total, 0);
+      },
+      estimatedTimeLeft() {
+        const now = new Date();
+        const totalPicklesMinutes = this.totalPicklesCount * 25;
+        const finishTime = new Date(now.getTime() + totalPicklesMinutes * 60 * 1000);
+
+        return `${finishTime.getHours()}:${finishTime.getMinutes()}`;
+      },
+      completedTasks(){
+        return this.tasks.filter(task => task.completed);
+      },
+      activeTasks(){
+        return this.tasks.filter(task => !task.completed);
+      },
     },
     methods: {
       startTimer() {
@@ -165,6 +202,7 @@
           title: '',
           description: '',
           pickles: null,
+          completed: false,
         };
       },
       addTask() {
@@ -173,6 +211,7 @@
             title: this.newTask.title,
             description: this.newTask.description,
             pickles: this.newTask.pickles,
+            completed: false,
           });
           this.closePopup();
         }
@@ -180,6 +219,9 @@
           alert('Please fill in the title and pickles correctly!');
           this.clearNewTask();
         }
+      },
+      markTaskAsCompleted(index) {
+        this.tasks[index].completed = true;
       },
 
 
