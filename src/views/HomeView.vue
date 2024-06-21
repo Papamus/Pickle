@@ -8,14 +8,14 @@
           <!-- left section - timer and approx time left-->
           <div class="timer">
               <div class="controls">
-                <button @click="setActivity('work')">Pickle</button>
-                <button @click="setActivity('shortBreak')">Short break</button>
-                <button @click="setActivity('longBreak')">Long break</button>
+                <button class="default-button" @click="setActivity('work')">Pickle</button>
+                <button class="default-button" @click="setActivity('shortBreak')">Short break</button>
+                <button class="default-button" @click="setActivity('longBreak')">Long break</button>
               </div>
-              <h1>{{ time }}</h1>
+              <!-- <h1>{{ time }}</h1> -->
               <div class="time">{{ formattedTime }}</div>
-              <button v-if="!isRunning" @click="startTimer">Start</button>
-              <button v-else @click="stopTimer">Stop</button>
+              <button class="timer-button" v-if="!isRunning" @click="startTimer">Start</button>
+              <button class="timer-button" v-else @click="stopTimer">Stop</button>
               <button @click="nextActivity">Skip</button>
           </div>
   
@@ -32,7 +32,7 @@
         <div class="right-container">
          <!-- right section - tasks list and add task btn -->
           <div class="task-list">
-              <h1>Your tasks</h1>
+              <h2>Your tasks</h2>
               <ul>
                 <li v-for="(task,index) in activeTasks" :key="index">
                   <div class="task-item">
@@ -44,7 +44,7 @@
                 </li>
               </ul>
               <p v-if="tasks.length === 0">Seems like there are no tasks left...</p>
-              <h1>Completed tasks</h1>
+              <h2>Completed tasks</h2>
               <ul>
                 <li v-for="(task,index) in completedTasks" :key="index">
                   <div class="task-item">
@@ -68,11 +68,11 @@
         <div class="modal" v-if="showPopup">
           <div class="modal-content">
             <span class="close" @click="showPopup = false">&times;</span>
-            <h2>Add a task</h2>
+            <h2 class="modal-h2">Add a task</h2>
             <input type="text" v-model="newTask.title" placeholder="Title">
             <input type="text" v-model="newTask.description" placeholder="Description">
             <input type="number" v-model="newTask.pickles" placeholder="Pickles">
-            <button @click="addTask">Add</button>
+            <button class="modal-button" @click="addTask">Add</button>
           </div>
         </div>
   
@@ -231,73 +231,62 @@
   </script>
   
   <style scoped>
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-      background-color: #f8f9fa;
-      border-bottom: 1px solid #e9ecef;
-    }
-    .navbar-left {
-      display: flex;
-      align-items: center;
-    }
-    .navbar-right {
-      display: flex;
-      align-items: center;
-    }
-    .navbar-app-name {
-      font-size: 1.5em;
-    }
-    .navbar-button {
-      margin-left: 10px;
-      padding: 5px 10px;
-      border: 1px solid;
-      border-radius: 10%;
-      background-color: #007bff;
-      color: white;
-    }
-  
+    
     .main-container {
       display: flex;
-      justify-content: space-between;
-      margin: 20px;
-      align-items: flex-start;
-      width: 90%;
+      align-items: start;
     }
     .left-container {
-      width: 65%;
+      width: 60%;
     }
     .right-container {
-      width: 35%;
+      width: 40%;
     }
-  
-  
-  
   
     .timer {
       font-size: 2em;
       text-align: center;
+      background-color: var(--lightpink);
+      padding: 2%;
+      border-radius: 25px;
+      margin: 50px;
+      height: 550px;
+    }
+    .controls {
+      margin: 5%;
     }
     .time {
-      font-size: 1.5em;
-      margin: 20px 0;
-    }
-  
-    button {
-      padding: 10px 20px;
-      margin: 10px;
-      font-size: 1em;
-      border: 1px solid;
-      border-radius: 10%;
-      background-color: #007bff;
+      font-size: 3em;
+      margin: 5%;
       color: white;
+    }
+    .timer-button {
+      background-color: var(--pink);
+      color: white;
+      border: none;
+      padding: 5%;
+      font-size: 3em;
+      cursor: pointer;
+      border-radius: 25px;
+    }
+    .approx-time-left {
+      display: flex;
+      justify-content: space-around;
+      font-size: 1.5em;
+      background-color: var(--lightpink);
+      padding: 20px;
+      border-radius: 25px;
+      margin: 50px;
     }
   
   
     .task-list {
       font-size: 1.5em;
+      background-color: var(--lightpink);
+      padding: 20px;
+      border-radius: 25px;
+      margin: 50px;
+      height: 550px;
     }
     .task-list ul {
       list-style-type: none;
@@ -310,24 +299,10 @@
     .add-task {
       margin-top: 20px;
       text-align: center;
-    }
-    .add-task button {
-      padding: 10px 20px;
-      font-size: 1em;
-      border: 1px solid;
-      border-radius: 10%;
-      background-color: #007bff;
-      color: white;
-    }
-    .modal{
-      display: block;
-      position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.4);
+      background-color: var(--lightpink);
+      margin: 50px;
+      padding: 20px;
+      border-radius: 25px;
+      border: none;
     }
   </style>

@@ -28,6 +28,7 @@
         margin-top: -8px;
         margin-left: -8px;
         margin-right: -8px;
+        padding: 15px;
         background-color: var(--darkpink);
         border-bottom: 0.5px solid black;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
