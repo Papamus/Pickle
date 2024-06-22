@@ -16,7 +16,9 @@
               <div class="time">{{ formattedTime }}</div>
               <button class="timer-button" v-if="!isRunning" @click="startTimer">Start</button>
               <button class="timer-button" v-else @click="stopTimer">Stop</button>
-              <button @click="nextActivity">Skip</button>
+              <button class="timer-skip-button" @click="nextActivity">
+                <i class="fa-solid fa-forward-step"></i>
+              </button>
           </div>
   
           <!-- approx time and tasks left -->
@@ -59,7 +61,7 @@
   
   
           <div class="add-task">
-            <button @click="showAddTaskPopup">Add task</button>
+            <button class="add-task-button" click="showAddTaskPopup">Add task</button>
           </div>
         </div>
   
@@ -269,6 +271,16 @@
       cursor: pointer;
       border-radius: 25px;
     }
+    .timer-skip-button {
+      background: none;
+      color: white;
+      border: none;
+      margin: 2%;
+      font-size: 2.5em;
+      cursor: pointer;
+    }
+
+
     .approx-time-left {
       display: flex;
       justify-content: space-around;
@@ -296,6 +308,8 @@
       margin: 10px 0;
       border: 1px solid #e9ecef;
     }
+
+
     .add-task {
       margin-top: 20px;
       text-align: center;
@@ -304,5 +318,14 @@
       padding: 20px;
       border-radius: 25px;
       border: none;
+    }
+    .add-task-button {
+      background: none;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 2em;
+      cursor: pointer;
+      border-radius: 25px;
     }
   </style>
