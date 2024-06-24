@@ -38,10 +38,14 @@
               <ul>
                 <li v-for="(task,index) in activeTasks" :key="index">
                   <div class="task-item">
-                    <div class="task-title">{{ task.title }}</div>
+                    <div class="task-header">
+                      <button class="task-complete-button" @click="markTaskAsCompleted(index)">
+                        <i class="fa-regular fa-circle-check"></i>
+                      </button>
+                      <div class="task-title">{{ task.title }}</div>
+                      <div class="task-pickles">{{ task.pickles }} </div>
+                    </div>
                     <div class="task-description" v-if="task.description">{{ task.description }}</div>
-                    <div class="task-pickles">{{ task.pickles }} </div>
-                    <button @click="markTaskAsCompleted(index)">Mark as completed</button>
                   </div>
                 </li>
               </ul>
@@ -50,9 +54,11 @@
               <ul>
                 <li v-for="(task,index) in completedTasks" :key="index">
                   <div class="task-item">
-                    <div class="task-title">{{ task.title }}</div>
+                    <div class="task-header">
+                      <div class="task-title">{{ task.title }}</div>
+                      <div class="task-pickles">{{ task.pickles }} </div>
+                    </div>
                     <div class="task-description" v-if="task.description">{{ task.description }}</div>
-                    <div class="task-pickles">{{ task.pickles }}</div>
                   </div>
                 </li>
               </ul>
@@ -61,7 +67,7 @@
   
   
           <div class="add-task">
-            <button class="add-task-button" click="showAddTaskPopup">Add task</button>
+            <button class="add-task-button" @click="showAddTaskPopup">Add task</button>
           </div>
         </div>
   
@@ -305,8 +311,44 @@
       padding: 0;
     }
     .task-item {
-      margin: 10px 0;
-      border: 1px solid #e9ecef;
+      background-color: var(--pink);
+      padding: 20px;
+      margin: 10px;
+      border: 1px solid var(--lightpink);
+      border-radius: 25px;
+    }
+    .task-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .task-title {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: white;
+    }
+    .task-description {
+      font-size: 1em;
+      color: white;
+      background-color: var(--lightpink);
+      padding: 10px;
+      border-radius: 25px;
+      margin-top: 10px;
+    }
+    .task-pickles {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: white;
+    }
+    .task-complete-button {
+      background: none;
+      color: white;
+      border: none;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+    .task-complete-button:hover {
+      color: black;
     }
 
 
